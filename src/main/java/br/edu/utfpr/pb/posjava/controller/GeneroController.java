@@ -7,6 +7,7 @@ package br.edu.utfpr.pb.posjava.controller;
 
 import br.com.caelum.vraptor.Consumes;
 import br.com.caelum.vraptor.Controller;
+import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
@@ -79,6 +80,23 @@ public class GeneroController {
     @Consumes(value = "application/json",options = WithoutRoot.class )
     public void atualizar(Genero genero){
         generoRepository.save(genero);
+        result.use(status()).ok();
+        
+    }
+    
+    @Delete
+    @Path(value =  "/{id}")
+    public void remove(Long id){
+        generoRepository.remove(id);
+        result.use(status()).ok();
+        
+    }
+    
+    @Delete
+    @Path(value = "/")
+    @Consumes(value = "application/json",options = WithoutRoot.class )
+    public void remove(Genero genero){
+        generoRepository.remove(genero.getId());
         result.use(status()).ok();
         
     }
