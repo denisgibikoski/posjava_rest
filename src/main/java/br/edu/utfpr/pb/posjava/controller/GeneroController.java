@@ -10,6 +10,7 @@ import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Post;
+import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.serialization.gson.WithoutRoot;
 import static br.com.caelum.vraptor.view.Results.json;
@@ -71,6 +72,15 @@ public class GeneroController {
     public void salvar(Genero genero){
         generoRepository.save(genero);
         result.use(status()).created();
+    }
+    
+    @Put
+    @Path(value = {"/",""})
+    @Consumes(value = "application/json",options = WithoutRoot.class )
+    public void atualizar(Genero genero){
+        generoRepository.save(genero);
+        result.use(status()).ok();
+        
     }
 
 }
