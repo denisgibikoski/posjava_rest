@@ -5,24 +5,60 @@
  */
 package br.edu.utfpr.pb.posjava.controller;
 
-import br.com.caelum.vraptor.Consumes;
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Path;
-import br.com.caelum.vraptor.Post;
-import br.com.caelum.vraptor.Result;
-import br.com.caelum.vraptor.serialization.gson.WithoutRoot;
 import static br.com.caelum.vraptor.view.Results.json;
-import static br.com.caelum.vraptor.view.Results.status;
 import br.edu.utfpr.pb.posjava.model.Serie;
+import br.edu.utfpr.pb.posjava.repository.Repository;
 import br.edu.utfpr.pb.posjava.repository.SerieRepository;
-import br.edu.utfpr.pb.posjava.repository.impl.SerieRepositoryImpl;
 import javax.inject.Inject;
+@Controller
+@Path(value = "/serie")
+public class SerieController extends AbstractController<Serie, Long>{
+        
+    @Inject
+    private SerieRepository serieRepository;
+
+    @Override
+    protected Repository getRepository() {
+       return serieRepository;
+    }
+      
+    @Override
+    @Get
+    @Path(value = {"","/"})
+    public void findAll(){
+        result.use(json())
+                .withoutRoot()
+                .from(getRepository().findAll())
+                .include("genero")
+                .include("produtora")
+                .serialize();
+    }
+
+    @Override
+    @Get
+    @Path(value = "/page/")
+    public void findAllPaged(int page, int size) {
+    result.use(json())
+                .withoutRoot()
+                .from(getRepository().findAll(page, size))
+                .include("genero")
+                .include("produtora")
+                .serialize();
+        
+    }
+    
+      
+    
+}
+
 
 /**
  *
  * @author denis
- */
+
 @Controller
 @Path(value = "/serie")
 public class SerieController {
@@ -64,3 +100,4 @@ public class SerieController {
         
     
 }
+*/

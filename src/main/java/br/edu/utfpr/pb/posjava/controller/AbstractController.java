@@ -21,6 +21,7 @@ import java.io.Serializable;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
+
 /**
  *
  * @author denis
@@ -106,6 +107,10 @@ public abstract class AbstractController<T extends AbstractModel, ID extends Ser
         getRepository().save(entity);
 
         result.use(status()).ok();
+        result.use(json())
+                .withoutRoot()
+                .from(entity)
+                .serialize();
 
     }
 }
